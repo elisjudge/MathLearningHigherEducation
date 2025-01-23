@@ -1,0 +1,27 @@
+---
+title: "Missing Value Analysis"
+output: html_notebook
+---
+
+# Check for Missing Values
+
+This notebook verifies that the dataset contains no missing values, as claimed 
+in the documentation.
+
+## Load Data
+
+```{r}
+data <- read.csv("../data/raw/raw.csv", sep = ";")
+```
+
+## Overall Missing Values
+```{r}
+any(is.na(data))
+```
+
+## Column-Wise Missing Values
+```{r}
+colSums(is.na(data))
+```
+# Conclusions
+No missing values were found in the dataset.
