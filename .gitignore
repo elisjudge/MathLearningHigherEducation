@@ -52,3 +52,6 @@ rsconnect/
 # Ignore temporary files
 *.log
 *.tmp
+
+# Ignore knitted files
+notebooks/*.html
