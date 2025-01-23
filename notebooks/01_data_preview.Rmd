@@ -1,0 +1,58 @@
+---
+title: "Initial Data Exploration"
+output: html_notebook
+---
+
+# Data Exploration
+Notebook to perform initial analysis on dataset contents and structure.
+
+## Load Data and Analyse first few rows
+
+```{r}
+data <- read.csv("../data/raw/raw.csv", sep = ";")
+head(data)
+```
+
+## Data Structures
+
+```{r}
+str(data)
+```
+## Data Summary
+
+```{r}
+summary(data)
+```
+## Categorical Variables
+
+### Question Level
+```{r}
+unique(data$Question.Level)
+```
+### Topic
+```{r}
+unique(data$Topic)
+```
+### Subtopic
+```{r}
+unique(data$Subtopic)
+```
+### Keywords
+```{r}
+unique(data$Keywords)
+```
+
+
+
+# Conclusions
+
+| Feature | Type | Notes |
+|---------|------|-------|
+| Student.ID | int | Identifier for Student |
+| Student.Country | chr | |
+| Question.ID | int | Identifier for Question |
+| Type.of.Answer | int | Categorical as int: correct (0) vs incorrect (1) |
+| Question.Level | chr |  Categorical: Difficulty of Question: Basic vs Advanced |
+| Topic | chr | Categorical: Level 0 Math Topic |
+| Subtopic | chr | Categorical: Level 1 Topic of Math Topic |  
+| Keywords | chr | Categorical: Additional Contextual Information |
