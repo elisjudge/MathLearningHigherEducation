@@ -18,38 +18,46 @@ head(data)
 ```{r}
 str(data)
 ```
+
 ## Data Summary
 
 ```{r}
 summary(data)
 ```
+
 ## Categorical Variables
 
-### Question Level
+### Question Level 
 ```{r}
 unique(data$Question.Level)
 ```
+
+### Country
+```{r}
+unique(data$Student.Country)
+```
+
 ### Topic
 ```{r}
 unique(data$Topic)
 ```
+
 ### Subtopic
 ```{r}
 unique(data$Subtopic)
 ```
+
 ### Keywords
 ```{r}
 unique(data$Keywords)
 ```
-
-
 
 # Conclusions
 
 | Feature | Type | Notes |
 |---------|------|-------|
 | Student.ID | int | Identifier for Student |
-| Student.Country | chr | |
+| Student.Country | chr | Categorical: 8 Countries |
 | Question.ID | int | Identifier for Question |
 | Type.of.Answer | int | Categorical as int: correct (0) vs incorrect (1) |
 | Question.Level | chr |  Categorical: Difficulty of Question: Basic vs Advanced |
