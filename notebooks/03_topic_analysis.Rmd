@@ -1,0 +1,97 @@
+---
+title: "Topic Analysis"
+output: html_notebook
+---
+
+# Topic Analysis
+
+“This analysis aims to explore the relationships between topics, subtopics, and keywords to better understand the structure of the dataset and identify any patterns or insights that can inform further analysis.”
+
+## Load Data
+```{r}
+data <- read.csv("../data/raw/raw.csv", sep = ";")
+```
+
+## Group by Topic and Subtopic
+```{r}
+library(dplyr)
+
+topic_subtopic <- data %>%
+  select(Topic, Subtopic) %>%  
+  distinct() %>%              
+  arrange(Topic, Subtopic) 
+
+topic_subtopic
+```
+
+## Number of Subtopics Per Topic
+``` {r}
+subtopic_count <- data %>%
+  group_by(Topic) %>%
+  summarize(Subtopic_Count = n_distinct(Subtopic))
+
+subtopic_count
+```
+
+```{r}
+library(igraph)
+library(ggraph)
+
+# Create an edge list: Relationship between Topic and Subtopic
+edges <- data.frame(
+  from = data$Topic,
+  to = data$Subtopic
+)
+
+# Create the graph
+graph <- graph_from_data_frame(edges, directed = TRUE)
+
+# Plot the network graph with adjustments to prevent label overlap
+ggraph(graph, layout = 'fr') + 
+  geom_edge_link(aes(alpha = 0.5), color = "blue") +  # Lighten edges
+  geom_node_point(aes(color = name), size = 6, shape = 21, fill = "lightblue") + # Node size and color
+  geom_node_text(aes(label = name), size = 3, vjust = 0.5, hjust = 0.5, color = "black", 
+                 check_overlap = TRUE) +  # Adjust text positioning and enable overlap checking
+  theme_void() + 
+  ggtitle("Topic-Subtopic Network") + 
+  theme(plot.title = element_text(hjust = 0.5), 
+        legend.position = "none")  # Removes the legend
+
+```
+# Keyword Analysis
+
+## Group Keyword By Topic and Subtopic
+
+```{r}
+library(dplyr)
+
+keyword_topic <- data %>%
+  select(Topic, Subtopic,  Keywords, Question.ID) %>%  
+  distinct() %>%              
+  arrange(Topic, Subtopic, Keywords, Question.ID ) 
+
+keyword_topic
+```
+
+## Summary of Question Themes and Questions By Topic
+
+```{r}
+topic_summary <- data %>%
+  select(Topic, Keywords, Question.ID) %>%
+  distinct() %>%
+  group_by(Topic) %>%
+  summarise(
+    keyword_count = n_distinct(Keywords),
+    question_count = n_distinct(Question.ID)
+  )
+
+topic_summary
+```
+
+# Conclusions
+- Potential Analyses can include Topic, Subtopic
+- Keywords can be helpful with contextualizing findings
+
+# Recommendations
+- Factorize Country, Topic, Subtopic
+
